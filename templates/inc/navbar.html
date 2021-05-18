@@ -1,0 +1,84 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <ul class="navbar-nav">
+      <a class="navbar-brand" href="#">PinoBino</a>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+      </li>
+    </ul>
+    <div class="input-group input-group-lg d-flex w-50">
+      <input type="text" class="form-control" id="searchbar" aria-label="Sizing example input"
+        aria-describedby="inputGroup-sizing-lg">
+      <span class="input-group-text" id="inputGroup-sizing-lg"><i class="bi bi-search"></i></span>
+    </div>
+    <ul class="navbar-nav">
+      <!-- new pin for authenticated users -->
+      {% if request.user.is_authenticated %}
+      <a href="{% url 'accounts:new_pin' request.user %}" class="btn btn-danger float-end">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-plus-lg"
+          viewBox="0 0 14 18">
+          <path d="M8 0a1 1 0 0 1 1 1v6h6a1 1 0 1 1 0 2H9v6a1 1 0 1 1-2 0V9H1a1 1 0 0 1 0-2h6V1a1 1 0 0 1 1-1z" />
+        </svg>
+      </a>
+      {% endif %}
+      <!-- new pin for authenticated users -->
+      {% if request.user.is_authenticated %}
+      <li class="nav-item dropdown float-right">
+        <a class="nav-link dropdown-toggle" href="#" id="usersetting_dropdown" role="button" data-bs-toggle="dropdown"
+          aria-expanded="false">
+
+          {% if request.user.profile.photo %}
+          <img src="{{request.user.profile.photo.url}}" class="rounded" alt="..." width="25em">
+          {% else %}
+          <i class="bi bi-person-bounding-box"></i>
+          {% endif %}
+
+          {% if request.user.first_name %}
+          {{request.user.first_name}}
+          {% else %}
+          {{request.user}}
+          {% endif %}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm p-2" aria-labelledby="navbarDropdownMenuLink">
+          <li>
+            <a class="dropdown-item" href="{% url 'accounts:dashboard' request.user %}">
+              <i class="bi bi-file-person"></i> Profile
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'accounts:update_profile' request.user %}"><i
+                class="bi bi-pencil-square"></i> Account Settings
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'accounts:user_pins' request.user %}">
+              <i class="bi bi-pin-angle"></i> Pins
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'accounts:user_boards' request.user %}">
+              <i class="bi bi-journal-album"></i> Boards
+            </a>
+          </li>
+          <li>
+            <hr>
+          </li>
+          <li>
+            <a class="dropdown-item" href="{% url 'accounts:logout' %}">
+              <i class="bi bi-box-arrow-right"></i> Sign out
+            </a>
+          </li>
+        </ul>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'accounts:login' %}"><i class="bi bi-box-arrow-in-left"></i> Sign in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link btn btn-primary" style="color:white" href="{% url 'accounts:register' %}"><i
+            class="bi bi-person-plus"></i> Sign up</a>
+      </li>
+      {% endif %}
+      <ul>
+  </div>
+</nav>

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="row row-cols-1 row-cols-sm-3 row-cols-md-6 row-cols-lg-8 g-3 mt-4 mb-4"
+  data-masonry='{"percentPosition": true }'>
+  {% for pin in pins %}
+  <div class="border-0">
+    <div class="pin_image">
+      <a href="{% url 'pin:single_pin' pin.slug%}">
+        <img src="{{pin.image.url}}" class="card-img-top rounded-3" alt="">
+      </a>
+      {% if request.user.is_authenticated %}
+      <div class="btn-group" id="addtosave">
+        <button type="button" class="btn btn-dark btn-sm dropdown-toggle" data-bs-toggle="dropdown"
+          data-bs-display="static" aria-expanded="false">
+          <i class="bi bi-plus-square"></i> Add to Boards
+        </button>
+        <ul class="dropdown-menu">
+          {% for board in user_boards %}
+          <li><a href="{% url 'accounts:addtoboard' pin.id board.id %}" class="dropdown-item" type="button">{{board.title}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+
+      {% if pin.id in user_pin_save %}
+      <a href="{% url 'accounts:remove_quicksave' pin.id %}"><i class="bi bi-save-fill" id="quicksave"
+          data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unsave"></i></a>
+      {% else %}
+      <a href="{% url 'accounts:quicksave' pin.id %}"><i class="bi bi-save" id="quicksave" data-bs-toggle="tooltip"
+          data-bs-placement="bottom" title="Save"></i></a>
+      {% endif %}
+      {% endif %}
+    </div>
+    {% if pin.user.profile.photo %}
+    <div class="mt-1">
+      <img src="{{ pin.user.profile.photo.url }}" class="ms-1 pe-1" style='width:10%' alt="...">
+      <a href="{% url 'accounts:dashboard' pin.user %}" class="link-dark" style='text-decoration:none'>{{pin.user}}
+      </a>
+    </div>
+    {% else %}
+    <div class="mt-1">
+      <i class="ms-1 pt-2 bi bi-person-bounding-box"></i>
+      <a href="{% url 'accounts:dashboard' pin.user %}" class="pt-2 pt-2 link-dark"
+        style='text-decoration:none'>{{pin.user}}
+      </a>
+    </div>
+    {% endif %}
+    {% comment %} <div class="card-body">
+      <h5 class="card-title">
+        {% if user.profile.photo %}
+        <small><img src="{{ pin.user.profile.photo.url }}" class="img-thumbnail rounded" alt="..."><a
+            href="{% url 'accounts:dashboard' pin.user %}">{{pin.user}}</a></small>
+        {% else %}
+        <small><i class="bi bi-person-bounding-box"></i> <a
+            href="{% url 'accounts:dashboard' pin.user %}">{{pin.user}}</a></small>
+        {% endif %}
+      </h5>
+    </div>
+    <div class="card-footer">
+      <small><i class="bi bi-journal-album"></i> {{pin.board}}</small>
+      <a href="{% url 'pin:single_pin' pin.slug%}" class="float-end"><i class="bi bi-three-dots"></i> </a>
+    </div> {% endcomment %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}

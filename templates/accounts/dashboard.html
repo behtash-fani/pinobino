@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-md-center mt-5">
+  <div class="col-5">
+    <div class="card p-4 shadow-sm border-0">
+
+      <h5 class="">
+        {{user}}
+        {% if request.user == user %}
+        <a href="{% url 'accounts:update_profile' request.user %}" class="btn btn-primary btn-sm float-end"><i
+            class="bi bi-pencil-square"></i></a>
+        {% else %}
+        <!-- check request.user is follow user or not -->
+        {% if request.user.is_authenticated %}
+        {% if not is_following %}
+        <button id="following_btn" class="btn btn-primary btn-sm float-end" data-id="{{ user.id }}"><i
+            class="bi bi-node-plus"></i> Follow</button>
+        {% else %}
+        <button id="following_btn" class="btn btn-warning btn-sm float-end" data-id="{{ user.id }}"><i
+            class=" bi bi-check"></i> Following</button>
+        {% endif %}
+        {% endif %}
+        <!-- end check request.user is follow user or not -->
+        {% endif %}
+      </h5>
+      <hr>
+      <h5 class="">
+      <div class="row">
+      <div class="col text-center">Pins: {{userpins.count}}</div>
+      <div class="col text-center">Followers: {{followers.count}}</div>
+      <div class="col text-center">Following: {{following.count}}</div>
+      </div>
+      </h5>
+      <div class="card-body">
+
+        <div class="row mt-3">
+          <div class="col-8">
+
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>Name</td>
+                  {% if user.first_name or user.last_name %}
+                  <td>{{user.first_name}} {{user.last_name}}</td>
+                  {% else %}
+                  <td>---</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <td>Email</td>
+                  <td>{{user.email}}</td>
+                </tr>
+                <tr>
+                  <td>Age</td>
+                  {% if user.profile.age %}
+                  <td>{{user.profile.age}} years old</td>
+                  {% else %}
+                  <td>---</td>
+                  {% endif %}
+                </tr>
+                <tr>
+                  <td>Bio</td>
+                  {% if user.profile.bio %}
+                  <td>{{user.profile.bio}}</td>
+                  {% else %}
+                  <td>---</td>
+                  {% endif %}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col-4">
+            {% if user.profile.photo %}
+            <div class="profileimg">
+              <img src="{{ user.profile.photo.url }}" class="img-thumbnail rounded float-end" alt="...">
+              {% if request.user == user %}
+              <a href="{% url 'accounts:remove_photo' %}"><i class="bi bi-x-square-fill"></i></a>
+              {% endif %}
+            </div>
+            {% else %}
+            <i class="bi bi-person-bounding-box float-end" style="font-size:8rem;color:#6d6d6d"></i>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

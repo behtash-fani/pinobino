@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="row justify-content-md-center mt-5">
+  <div class="col-6">
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img class="card-img" src="{{pin.image.url}}" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+
+            {% if pin.user.profile.photo %}
+            <div class="mt-1 mb-3">
+              <img src="{{ pin.user.profile.photo.url }}" class="ms-1 pe-1 rounded-circle img-responsive" style='width:5%' alt="...">
+              <a href="{% url 'accounts:dashboard' pin.user %}" class="link-dark"
+                style='text-decoration:none'>{{pin.user}}
+              </a>
+            </div>
+            {% else %}
+            <div class="mt-1 mb-3">
+              <i class="ms-1 pt-2 bi bi-person-bounding-box"></i>
+              <a href="{% url 'accounts:dashboard' pin.user %}" class="pt-2 pt-2 link-dark"
+                style='text-decoration:none'>{{pin.user}}
+              </a>
+            </div>
+            {% endif %}
+
+            <p class="card-text">{{pin.caption}}</p>
+            <p class="card-text"><small class="text-muted">Uploaded {{pin.created|timesince}} ago</small></p>
+            <a href="#" class="btn btn-outline-secondary btn-sm bottom-0">
+              <i class="bi bi-journal-album"></i> {{pin.board}}
+            </a>
+            <a href="{% url 'pin:listpin'%}" class="position-absolute top-0 end-0 mt-1" style="margin-right:5px;">
+              <h3><i class="bi bi-x-circle text-secondary"></i></h3>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

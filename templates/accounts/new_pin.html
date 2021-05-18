@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="row justify-content-md-center mt-5">
+    <div class="col-5">
+        <div class="card p-4 shadow-sm border-0">
+            <h5 class=""><i class="bi bi-plus-square"></i> Send new pin image</h5>
+            <hr>
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    {{form.non_fields_errors}}
+
+                    <label for="{{ form.title.id_for_label}}" class="pb-1"><i class="bi bi-card-heading"></i>
+                        Title</label>
+                    {{form.title.errors}}
+                    {{form.title}}
+
+                    <label for="{{ form.board.id_for_label}}" class="pb-1"><i class="bi bi-file-person"></i>
+                        Board</label>
+                    {{form.board.errors}}
+                    {{form.board}}
+
+                    <label for="{{ form.image.id_for_label}}" class="pb-1"><i class="bi bi-card-image"></i>
+                        Photo</label>
+                    {{form.image.errors}}
+                    {{form.image}}
+
+                    <label for="{{ form.url.id_for_label}}" class="pb-1"><i class="bi bi-link-45deg"></i>
+                        URL</label>
+                    {{form.url.errors}}
+                    {{form.url}}
+
+                    <label for="{{ form.caption.id_for_label}}" class="pb-1"><i class="bi bi-card-text"></i>
+                        Caption</label>
+                    {{form.caption.errors}}
+                    {{form.caption}}
+
+                    <button type='submit' class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
+                    <a href="{% url 'accounts:user_pins' request.user %}" class="btn btn-secondary"><i
+                            class="bi bi-x-square"></i> Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

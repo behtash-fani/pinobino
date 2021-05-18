@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-md-center mt-5">
+  <div class="col-6">
+    <div class="card p-4 shadow-sm border-0">
+      <h5 class="">
+        Boards: {{boards.count}} board
+        <a href="{% url 'accounts:newboard' request.user %}" class="btn btn-primary btn-sm float-end"><i
+            class="bi bi-plus-square"></i> New</a>
+      </h5>
+      <hr>
+      <div class="card-body">
+        <div class="row">
+          {% for board in boards %}
+          <div class="col-12 mt-3">
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-9">
+                    <h5 class="card-title">{{board.title}}</h5>
+                    <span class="card-text">{{board.description}}</span>
+                  </div>
+                  <div class="col-3">
+                    <a href="#" class="btn btn-primary btn-sm m-1"><i class="bi bi-pencil-square"></i></a>
+                    <i class="bi bi-grip-vertical"></i>
+                    <a href="#" class="btn btn-danger btn-sm m-1"><i class="bi bi-trash"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p>You do not have a board right now .You can make a board and categorize your pins</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

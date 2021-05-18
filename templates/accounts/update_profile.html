@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-md-center mt-5">
+    <div class="col-5">
+        <div class="card p-4 shadow-sm border-0">
+            {% if user.first_name or user.last_name %}
+            <h5 class="">
+                {{user.first_name}} {{user.last_name}}
+            </h5>
+            {% else %}
+            <h5 class="">
+                {{user.username}}
+            </h5>
+            <hr>
+            {% endif %}
+            <div class="card-body">
+                <form action="" method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+
+                    <label for="{{ form.photo.id_for_label}}" class="pb-1"><i class="bi bi-person-bounding-box"></i>
+                        Photo</label>
+                    {{form.photo.errors}}
+                    {{form.photo}}
+
+                    <label for="{{ form.first_name.id_for_label}}" class="pb-1"><i class="bi bi-person"></i> First
+                        Name</label>
+                    {{form.first_name.errors}}
+                    {{form.first_name}}
+
+                    <label for="{{ form.last_name.id_for_label}}" class="pb-1"><i class="bi bi-person"></i> Last
+                        Name</label>
+                    {{form.last_name.errors}}
+                    {{form.last_name}}
+
+                    <label for="{{ form.email.id_for_label}}" class="pb-1"><i class="bi bi-envelope"></i> Email</label>
+                    {{form.email.errors}}
+                    {{form.email}}
+
+                    <label for="{{ form.age.id_for_label}}" class="pb-1"><i class="bi bi-file-bar-graph"></i>
+                        Age</label>
+                    {{form.age.errors}}
+                    {{form.age}}
+
+                    <label for="{{ form.bio.id_for_label}}" class="pb-1"><i class="bi bi-card-text"></i> Bio</label>
+                    {{form.bio.errors}}
+                    {{form.bio}}
+
+                    <button type='submit' class="btn btn-primary"><i class="bi bi-save"></i> Save</button>
+                    <a href="{% url 'accounts:dashboard' request.user %}" class="btn btn-secondary"><i
+                            class="bi bi-x"></i> Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
